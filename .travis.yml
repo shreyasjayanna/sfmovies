@@ -9,6 +9,5 @@ before_script:
   - yarn db:reset
 script:
   - yarn test
-  # TODO: Uncomment 'yarn enforce' line below once tests are written.
-  # - yarn enforce
+  - yarn enforce
   - yarn lint
