@@ -35,6 +35,7 @@
   "dependencies": {
     "bookshelf": "^0.14.2",
     "hapi": "16.6.1",
+    "hapi-bookshelf-serializer": "2.1.0",
     "knex": "^0.17.0",
     "pg": "^7.11.0"
   }
