@@ -21,7 +21,7 @@ describe('movie validator', () => {
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('title');
-      expect(result.error.details[0].type).to.eql('string.max')
+      expect(result.error.details[0].type).to.eql('string.max');
     });
 
   });
@@ -32,18 +32,18 @@ describe('movie validator', () => {
       const payload = {
         title: 'a title',
         release_year: 1800
-      }
+      };
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('release_year');
-      expect(result.error.details[0].type).to.eql('number.min')
+      expect(result.error.details[0].type).to.eql('number.min');
     });
 
     it('is limited to 4 digits', () => {
       const payload = {
         title: 'a title',
         release_year: 12345
-      }
+      };
       const result = Joi.validate(payload, MovieValidator);
 
       expect(result.error.details[0].path[0]).to.eql('release_year');
