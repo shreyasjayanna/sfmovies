@@ -4,18 +4,20 @@ const Controller = require('../../../../lib/plugins/features/movies/controller')
 
 const Knex = require('../../../../lib/libraries/knex');
 
-const Movie = require('../../../../lib/models/movie');
+const TableName = 'movies';
 
 beforeEach('Setup test DB', async () => {
-  await Knex.raw('TRUNCATE TABLE movies CASCADE');
-  await new Movie().save({
-    title: 'Twisted',
-    release_year: 2004
-  });
-  await new Movie().save({
-    title: 'Never Die Twice',
-    release_year: 2001
-  });
+  await Knex(TableName).truncate();
+  await Knex(TableName).insert([
+    {
+      title: 'Twisted',
+      release_year: 2004
+    },
+    {
+      title: 'Never Die Twice',
+      release_year: 2001
+    }
+  ]);
 });
 
 describe('movie controller', () => {

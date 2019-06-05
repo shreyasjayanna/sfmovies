@@ -25,8 +25,7 @@ describe('movies integration', () => {
     it('retrieve all movies', () => {
       return Movies.inject({
         url: '/movies',
-        method: 'GET',
-        payload: {}
+        method: 'GET'
       })
       .then((response) => {
         expect(response.statusCode).to.eql(200);
