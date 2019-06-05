@@ -7,14 +7,11 @@ describe('movie model', () => {
   describe('serialize', () => {
 
     it('includes all of the necessary fields', () => {
-      return 'no coverage';
-    });
-
-    it('includes all of the necessary fields', () => {
       const movie = Movie.forge().serialize();
 
       expect(movie).to.have.all.keys([
         'id',
+        'locations',
         'title',
         'release_year',
         'object'
