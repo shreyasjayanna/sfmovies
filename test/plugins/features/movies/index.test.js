@@ -52,10 +52,11 @@ describe('movies integration', () => {
       });
     });
 
-    it('retrieve movies by year', () => {
+    it('retrieve movies by year', async () => {
       const year = 2000;
 
-      Knex('movies').insert([
+      await Knex.schema.raw('TRUNCATE TABLE movies, locations, locations_movies CASCADE');
+      await Knex('movies').insert([
         {
           title: 'Twisted',
           release_year: year
