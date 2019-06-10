@@ -1,6 +1,6 @@
 'use strict';
 
-const Locations = require('../../lib/models/locations');
+const Locations = require('../../lib/models/location');
 
 describe('locations model', () => {
 
