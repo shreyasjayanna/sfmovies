@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 
-const AddLocationsValidator = require('../../lib/validators/add_locations');
+const AddLocationsValidator = require('../../lib/validators/location');
 
 describe('add locations validator', () => {
 
