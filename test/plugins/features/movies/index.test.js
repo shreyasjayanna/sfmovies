@@ -1,5 +1,7 @@
 'use strict';
 
+const Knex = require('../../../../lib/libraries/knex');
+
 const Movies = require('../../../../lib/server');
 
 describe('movies integration', () => {
@@ -50,8 +52,20 @@ describe('movies integration', () => {
       });
     });
 
-    it('retrieve movies by year', () => {
+    it('retrieve movies by year', async () => {
       const year = 2000;
+
+      await Knex.schema.raw('TRUNCATE TABLE movies, locations, locations_movies CASCADE');
+      await Knex('movies').insert([
+        {
+          title: 'Twisted',
+          release_year: year
+        },
+        {
+          title: 'Never Die Twice',
+          release_year: year
+        }
+      ]);
 
       return Movies.inject({
         url: `/movies?year=${year}`,
@@ -83,6 +97,46 @@ describe('movies integration', () => {
           expect(response.result[idx].release_year).to.greaterThan(year_from - 1);
           expect(response.result[idx].release_year).to.lessThan(year_to + 1);
         }
+      });
+    });
+
+  });
+
+  describe('add locations to movie', () => {
+
+    it('retrieve movies by name', () => {
+      const title = 'Twi';
+
+      return Movies.inject({
+        url: `/movies?title=${title}`,
+        method: 'GET'
+      })
+      .then((response) => {
+        expect(response.statusCode).to.eql(200);
+        expect(response.result).to.be.an('array');
+
+        return response.result[0].id;
+      })
+      .then((id) => {
+        return Movies.inject({
+          url: `/movies/${id}/locations`,
+          method: 'POST',
+          payload: {
+            city: 'San Francisco',
+            state: 'California'
+          }
+        }).then((response) => {
+          expect(response.statusCode).to.eql(200);
+
+          const result = JSON.parse(response.payload);
+
+          expect(result.id).to.eql(id);
+          expect(result.locations).to.be.an('array');
+
+          const location = result.locations[0];
+          expect(location.city).to.eql('San Francisco');
+          expect(location.state).to.eql('California');
+        });
       });
     });
 
