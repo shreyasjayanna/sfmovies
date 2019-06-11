@@ -37,6 +37,9 @@ describe('movie controller', () => {
       const movie = await Controller.create(payload);
 
       expect(movie.get('title')).to.eql(payload.title);
+
+      // Test to make sure name is also being used during migration.
+      expect(movie.get('name')).to.eql(payload.title);
     });
 
   });
