@@ -10,11 +10,11 @@ beforeEach('Setup test DB', async () => {
   await Knex.schema.raw('TRUNCATE TABLE movies, locations, locations_movies CASCADE');
   await Knex('movies').insert([
     {
-      title: 'Twisted',
+      name: 'Twisted',
       release_year: 2004
     },
     {
-      title: 'Never Die Twice',
+      name: 'Never Die Twice',
       release_year: 2001
     }
   ]);
@@ -32,14 +32,13 @@ describe('movie controller', () => {
   describe('create', () => {
 
     it('creates a movie', async () => {
-      const payload = { title: 'WALL-E' };
-
+      const name = 'WALL-E';
+      const payload = { title: name };
       const movie = await Controller.create(payload);
 
-      expect(movie.get('title')).to.eql(payload.title);
-
-      // Test to make sure name is also being used during migration.
-      expect(movie.get('name')).to.eql(payload.title);
+      // Verify that we are no longer writing to title column.
+      expect(movie.get('title')).to.eql(null);
+      expect(movie.get('name')).to.eql(name);
     });
 
   });
