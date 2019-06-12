@@ -58,11 +58,11 @@ describe('movies integration', () => {
       await Knex.schema.raw('TRUNCATE TABLE movies, locations, locations_movies CASCADE');
       await Knex('movies').insert([
         {
-          title: 'Twisted',
+          name: 'Twisted',
           release_year: year
         },
         {
-          title: 'Never Die Twice',
+          name: 'Never Die Twice',
           release_year: year
         }
       ]);

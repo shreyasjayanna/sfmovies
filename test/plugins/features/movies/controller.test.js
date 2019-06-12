@@ -36,8 +36,6 @@ describe('movie controller', () => {
       const payload = { title: name };
       const movie = await Controller.create(payload);
 
-      // Verify that we are no longer writing to title column.
-      expect(movie.get('title')).to.eql(null);
       expect(movie.get('name')).to.eql(name);
     });
 
